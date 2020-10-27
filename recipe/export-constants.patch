@@ -1,0 +1,95 @@
+From becabd33d6c0042be4451d90783f764b75866540 Mon Sep 17 00:00:00 2001
+From: Sylvain Corlay <sylvain.corlay@gmail.com>
+Date: Tue, 27 Oct 2020 15:31:52 +0100
+Subject: [PATCH] Export constants
+
+---
+ CMakeLists.txt                      |  2 ++
+ include/SQLiteCpp/Database.h        | 18 +++++++++---------
+ include/SQLiteCpp/SQLiteCppConfig.h | 11 +++++++++++
+ 3 files changed, 22 insertions(+), 9 deletions(-)
+ create mode 100644 include/SQLiteCpp/SQLiteCppConfig.h
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 85c1061..4d90dee 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -201,6 +201,8 @@ if (SQLITE_USE_LEGACY_STRUCT)
+     target_compile_definitions(SQLiteCpp PUBLIC SQLITE_USE_LEGACY_STRUCT)
+ endif (SQLITE_USE_LEGACY_STRUCT)
+ 
++set_target_properties(SQLiteCpp PROPERTIES COMPILE_DEFINITIONS "SQLITECPP_EXPORTS")
++
+ if (UNIX AND (CMAKE_COMPILER_IS_GNUCXX OR ${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang"))
+     set_target_properties(SQLiteCpp PROPERTIES COMPILE_FLAGS "-fPIC")
+ endif (UNIX AND (CMAKE_COMPILER_IS_GNUCXX OR ${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang"))
+diff --git a/include/SQLiteCpp/Database.h b/include/SQLiteCpp/Database.h
+index 3c1b4d8..f74e323 100644
+--- a/include/SQLiteCpp/Database.h
++++ b/include/SQLiteCpp/Database.h
+@@ -13,6 +13,7 @@
+ #include <SQLiteCpp/Column.h>
+ #include <memory>
+ #include <string.h>
++#include "SQLiteCppConfig.h"
+ 
+ // Forward declarations to avoid inclusion of <sqlite3.h> in a header
+ struct sqlite3;
+@@ -25,29 +26,28 @@ struct Mem;
+ typedef struct Mem sqlite3_value;
+ #endif
+ 
+-
+ namespace SQLite
+ {
+ 
+ // Those public constants enable most usages of SQLiteCpp without including <sqlite3.h> in the client application.
+ 
+ /// The database is opened in read-only mode. If the database does not already exist, an error is returned.
+-extern const int OPEN_READONLY;     // SQLITE_OPEN_READONLY
++SQLITECPP_API extern const int OPEN_READONLY;     // SQLITE_OPEN_READONLY
+ /// The database is opened for reading and writing if possible, or reading only if the file is write protected
+ /// by the operating system. In either case the database must already exist, otherwise an error is returned.
+-extern const int OPEN_READWRITE;    // SQLITE_OPEN_READWRITE
++SQLITECPP_API extern const int OPEN_READWRITE;    // SQLITE_OPEN_READWRITE
+ /// With OPEN_READWRITE: The database is opened for reading and writing, and is created if it does not already exist.
+-extern const int OPEN_CREATE;       // SQLITE_OPEN_CREATE
++SQLITECPP_API extern const int OPEN_CREATE;       // SQLITE_OPEN_CREATE
+ /// Open database with thread-safety
+-extern const int OPEN_FULLMUTEX;    // SQLITE_OPEN_FULLMUTEX
++SQLITECPP_API extern const int OPEN_FULLMUTEX;    // SQLITE_OPEN_FULLMUTEX
+ 
+ /// Enable URI filename interpretation, parsed according to RFC 3986 (ex. "file:data.db?mode=ro&cache=private")
+-extern const int OPEN_URI;          // SQLITE_OPEN_URI
++SQLITECPP_API extern const int OPEN_URI;          // SQLITE_OPEN_URI
+ 
+-extern const int OK;                ///< SQLITE_OK (used by check() bellow)
++SQLITECPP_API extern const int OK;                ///< SQLITE_OK (used by check() bellow)
+ 
+-extern const char*  VERSION;        ///< SQLITE_VERSION string from the sqlite3.h used at compile time
+-extern const int    VERSION_NUMBER; ///< SQLITE_VERSION_NUMBER from the sqlite3.h used at compile time
++SQLITECPP_API extern const char*  VERSION;        ///< SQLITE_VERSION string from the sqlite3.h used at compile time
++SQLITECPP_API extern const int    VERSION_NUMBER; ///< SQLITE_VERSION_NUMBER from the sqlite3.h used at compile time
+ 
+ /// Return SQLite version string using runtime call to the compiled library
+ const char* getLibVersion() noexcept;
+diff --git a/include/SQLiteCpp/SQLiteCppConfig.h b/include/SQLiteCpp/SQLiteCppConfig.h
+new file mode 100644
+index 0000000..ab7e465
+--- /dev/null
++++ b/include/SQLiteCpp/SQLiteCppConfig.h
+@@ -0,0 +1,11 @@
++
++// Visual C++ declspec macros
++#ifdef _WIN32
++    #ifdef SQLITECPP_EXPORTS
++        #define SQLITECPP_API __declspec(dllexport)
++    #else
++        #define SQLITECPP_API __declspec(dllimport)
++    #endif
++#else
++    #define SQLITECPP_API
++#endif
+-- 
+2.23.0
+

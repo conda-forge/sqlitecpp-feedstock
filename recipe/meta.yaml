@@ -8,9 +8,11 @@ package:
 source:
   url: https://github.com/SRombauts/SQLiteCpp/archive/{{ version }}.tar.gz
   sha256: b00b1efad985dd415c3b62b01252cae20d9f2c32dcac435ddd8a105e9d4ddcde
+  patches:
+    - export-constants.patch
 
 build:
-  number: 0
+  number: 1
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x' ) }}
 
