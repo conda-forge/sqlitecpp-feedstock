@@ -5,7 +5,7 @@ Home: https://github.com/SRombauts/SQLiteCpp
 
 Package license: MIT
 
-Feedstock license: BSD-3-Clause
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/sqlitecpp-feedstock/blob/master/LICENSE.txt)
 
 Summary: SQLiteC++ (SQLiteCpp) is a smart and easy to use C++ SQLite3 wrapper.
 
