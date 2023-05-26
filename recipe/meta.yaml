@@ -1,5 +1,5 @@
 {% set name = "sqlitecpp" %}
-{% set version = "3.2.0" %}
+{% set version = "3.3.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/SRombauts/SQLiteCpp/archive/{{ version }}.tar.gz
-  sha256: 57f91ed44ef205fe97b8c6586002fe6031cd02771d1c5d8415d9c515ad1532d1
+  sha256: 4a37dd63cf91235ea2ef4494054700c144b3f96e93a330ef61ed53d106353e9c
 
 build:
   number: 0
