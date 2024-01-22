@@ -2,7 +2,7 @@
 
 mkdir build && cd build
 
-cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
+cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=$PREFIX \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_INSTALL_LIBDIR=lib \
       -DSQLITECPP_INTERNAL_SQLITE=OFF \
@@ -19,5 +19,7 @@ cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
       $SRC_DIR
 
 make VERBOSE=1 -j${CPU_COUNT}
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
 make test
+fi
 make install
