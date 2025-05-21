@@ -24,7 +24,7 @@ requirements:
     - sqlite
     - gtest
   run_exports:
-    - ${{ pin_subpackage(name, max_pin='x.x' ) }}
+    - ${{ pin_subpackage(name, upper_bound='x.x' ) }}
 
 tests:
   - package_contents:
