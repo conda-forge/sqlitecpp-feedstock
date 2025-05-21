@@ -18,8 +18,8 @@ cmake ${CMAKE_ARGS} -GNinja -DCMAKE_INSTALL_PREFIX=$PREFIX \
       -DCMAKE_PROGRAM_PATH=$BUILD_PREFIX \
       $SRC_DIR
 
-make VERBOSE=1 -j${CPU_COUNT}
+ninja VERBOSE=1 -j${CPU_COUNT}
 if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
-make test
+ninja test
 fi
-make install
+ninja install

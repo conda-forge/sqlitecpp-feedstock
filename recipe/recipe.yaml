@@ -29,7 +29,7 @@ requirements:
 tests:
   - package_contents:
       lib:
-        - SQLiteCpp
+        - ${{ "SQLiteCpp" if unix }}
       include:
         - SQLiteCpp/Database.h
 
