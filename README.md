@@ -12,19 +12,11 @@ Summary: SQLiteC++ (SQLiteCpp) is a smart and easy to use C++ SQLite3 wrapper.
 SQLiteC++ offers an encapsulation around the native C APIs of SQLite, with
 a few intuitive and well documented C++ classes.
 
-
 Current build status
 ====================
 
 
-<table><tr>
-    <td>Travis</td>
-    <td>
-      <a href="https://app.travis-ci.com/conda-forge/sqlitecpp-feedstock">
-        <img alt="linux" src="https://img.shields.io/travis/com/conda-forge/sqlitecpp-feedstock/main.svg?label=Linux">
-      </a>
-    </td>
-  </tr>
+<table>
     
   <tr>
     <td>Azure</td>
